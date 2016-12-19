@@ -1,5 +1,7 @@
 package com.spring.hibernate.college.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,8 +23,6 @@ public class Controller {
 		college.setStudentField("CS");
 		college.setStudentAddress("Shastri Nagar");
 		return collegeService.addStudentDeatils(college);
-		
-		
 	}
 	
 	@RequestMapping("/updateStudentDetails")
@@ -33,7 +33,12 @@ public class Controller {
 		college.setStudentField("CS");
 		college.setStudentAddress("Shastri Nagar");
 		return collegeService.updateStudentDeatils(college);
-		
-		
+	}
+	
+	@RequestMapping("/getStudentDetails")
+	public List<College> getStudentDeatils(){
+		College college = new College();
+		college.getStudentId();
+		return collegeService.getStudentDeatils(college);
 	}
 }

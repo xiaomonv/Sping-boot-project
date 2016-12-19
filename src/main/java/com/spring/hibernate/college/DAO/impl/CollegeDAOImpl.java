@@ -1,5 +1,7 @@
 package com.spring.hibernate.college.DAO.impl;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -55,6 +57,13 @@ public class CollegeDAOImpl implements CollegeDAO {
 		session.update(college);
 		transaction.commit();
 		return "Successfully updated...!!!!";
+	}
+
+	public List<College> getStudentDeatils(College college) {
+		if (StringUtils.isEmpty(session) || !session.isOpen()) {
+			session = getSession();
+		}
+		return (List<College>) session.createCriteria(College.class).list();
 	}
 
 }

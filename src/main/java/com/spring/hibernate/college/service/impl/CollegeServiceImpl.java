@@ -1,5 +1,7 @@
 package com.spring.hibernate.college.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,10 @@ public class CollegeServiceImpl implements CollegeService {
 
 	public String updateStudentDeatils(College college) {
 		return collegeDAO.updateStudentDeatils(college);
+	}
+	
+	public List<College> getStudentDeatils(College college) {
+		return collegeDAO.getStudentDeatils(college);
 	}
 
 }
