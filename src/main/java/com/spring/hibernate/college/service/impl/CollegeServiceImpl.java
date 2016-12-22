@@ -27,4 +27,9 @@ public class CollegeServiceImpl implements CollegeService {
 		return collegeDAO.getStudentDeatils(college);
 	}
 
+	@Override
+	public String deleteStudentDeatils(int roll_no) {
+		 return collegeDAO.deleteStudentDeatils(roll_no);
+	}
+
 }

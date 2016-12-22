@@ -22,10 +22,10 @@ public class CollegeDAOImpl implements CollegeDAO {
 		super();
 	}
 
-	/*public CollegeDAOImpl(SessionFactory sessionFactory) {
-		super();
-		this.sessionFactory = sessionFactory;
-	}*/
+	/*
+	 * public CollegeDAOImpl(SessionFactory sessionFactory) { super();
+	 * this.sessionFactory = sessionFactory; }
+	 */
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -50,13 +50,43 @@ public class CollegeDAOImpl implements CollegeDAO {
 	}
 
 	public String updateStudentDeatils(College college) {
-		
+
+		String response = null;
 		if (StringUtils.isEmpty(session) || !session.isOpen()) {
 			session = getSession();
 		}
-		session.update(college);
-		transaction.commit();
-		return "Successfully updated...!!!!";
+
+		if (college.getStudentId() > 0) {
+			College col = session.get(College.class, college.getStudentId());
+
+			if (!StringUtils.isEmpty(col)) {
+				if (!StringUtils.isEmpty(college.getStudentName())) {
+					col.setStudentName(college.getStudentName());
+				}
+				if (!StringUtils.isEmpty(college.getStudentField())) {
+					col.setStudentField(college.getStudentField());
+				}
+				if (!StringUtils.isEmpty(college.getStudentCourse())) {
+					col.setStudentCourse(college.getStudentCourse());
+				}
+				if (!StringUtils.isEmpty(college.getStudentAddress())) {
+					col.setStudentAddress(college.getStudentAddress());
+				}
+				try {
+					session.update(col);
+					transaction.commit();
+					response = "Successfully updated....!!!!!";
+				} catch (Exception exception) {
+					response = "Exception occurs";
+					exception.printStackTrace();
+				} finally {
+					session.close();
+				}
+			}
+		} else {
+			response = "No data exists for given Id";
+		}
+		return response;
 	}
 
 	public List<College> getStudentDeatils(College college) {
@@ -64,6 +94,20 @@ public class CollegeDAOImpl implements CollegeDAO {
 			session = getSession();
 		}
 		return (List<College>) session.createCriteria(College.class).list();
+	}
+
+	@Override
+	public String deleteStudentDeatils(int roll_no) {
+		if (StringUtils.isEmpty(session) || !session.isOpen()) {
+			session = getSession();
+		}
+		College college = (College) session.get(College.class, roll_no);
+		System.out.println(college);
+		session.delete(college);
+		transaction.commit();
+		session.close();
+		System.out.println("Successfully deleted ID......!!!!!!!!!!");
+		return "Successfully deleted ID......!!!!!!!!!!";
 	}
 
 }

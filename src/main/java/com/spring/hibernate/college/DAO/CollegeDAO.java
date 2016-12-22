@@ -11,4 +11,7 @@ public interface CollegeDAO {
 	public String updateStudentDeatils(College college);
 	
 	public List<College> getStudentDeatils(College college);
+	
+	public String deleteStudentDeatils(int roll_no);
+	
 }
